@@ -1,0 +1,8 @@
+name = ${1:Name}
+description = ${2:Description}
+package = ${3:Package}
+core = 7.x
+
+dependencies[] = ${4:Dependency}
+
+files[] = classes/custom_class.inc
