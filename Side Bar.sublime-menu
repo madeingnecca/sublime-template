@@ -1,5 +1,5 @@
 [
 	{ "caption": "-" },
-	{ "caption": "Insert Template", "command": "insert_template_in_paths", "args": {"paths": []} },
+	{ "caption": "Insert Template", "command": "insert_template_sidebar", "args": {"paths": []} },
 	{ "caption": "-" }
 ]

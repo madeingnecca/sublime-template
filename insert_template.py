@@ -80,11 +80,15 @@ class Templates:
         return Template(name, template_path)
 
 
-class InsertTemplateCommand(sublime_plugin.TextCommand):
-    def run(self, edit, path=None):
-        self.window = self.view.window()
-        self.path = path
+class InsertTemplateSidebarCommand(sublime_plugin.WindowCommand):
+    def run(self, paths):
+        self.window.run_command('insert_template', {'path': paths[0]})
+
+
+class InsertTemplateCommand(sublime_plugin.WindowCommand):
+    def run(self, path=None):
         self.manager = Templates()
+        self.path = path
         self.template = None
         self.new_name = 'noname'
         self.project_path = self.window.folders()[0] or ''
@@ -140,7 +144,7 @@ class InsertTemplateCommand(sublime_plugin.TextCommand):
 
                 def check_loaded():
                     if main_view.is_loading():
-                        sublime.set_timeout(check_loaded, 100)
+                        sublime.set_timeout(check_loaded, 50)
                     else:
                         # select_all is needed to replace content with snippet.
                         main_view.run_command('select_all')
@@ -149,10 +153,3 @@ class InsertTemplateCommand(sublime_plugin.TextCommand):
                 # File loading is async, so it's not possible to run
                 # select_all + insert_wrapper immediately after (could cause bugs).
                 check_loaded()
-
-
-class InsertTemplateInPathsCommand(sublime_plugin.WindowCommand):
-    def run(self, paths):
-        # Call main plugin with custom path.
-        self.window.active_view().run_command('insert_template',
-                                              {'path': paths[0]})
